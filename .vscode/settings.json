@@ -5,7 +5,8 @@
         "editor.formatOnSave": false,
     },
     "files.associations": {
-        "*.h": "c"
+        "*.h": "c",
+        "array": "cpp"
     },
     "cortex-debug.variableUseNaturalFormat": true,
     "cmake.configureOnOpen": true,

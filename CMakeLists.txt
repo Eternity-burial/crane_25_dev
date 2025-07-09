@@ -48,11 +48,25 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
+
+    applications/controllers/mecanum_controller/mecanum_controller.cpp
+
+    applications/hardwares/uart/uart_recv.cpp
+
+    applications/control_task.cpp
+
+    crane_middleware/motor/zdt_motor/zdt_motor.cpp
+    crane_middleware/tools/math_tools/math_tools.cpp
+    crane_middleware/tools/mecanum/mecanum.cpp
+    crane_middleware/tools/pid/pid.cpp
+    
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    applications
+    crane_middleware
 )
 
 # Add project symbols (macros)
