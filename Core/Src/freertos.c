@@ -49,6 +49,7 @@
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
 osThreadId controlHandle;
+osThreadId ledHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -57,6 +58,7 @@ osThreadId controlHandle;
 
 void StartDefaultTask(void const * argument);
 extern void control_task(void const * argument);
+extern void led_task(void const * argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -110,6 +112,10 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of control */
   osThreadDef(control, control_task, osPriorityNormal, 0, 512);
   controlHandle = osThreadCreate(osThread(control), NULL);
+
+  /* definition and creation of led */
+  osThreadDef(led, led_task, osPriorityNormal, 0, 256);
+  ledHandle = osThreadCreate(osThread(led), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
