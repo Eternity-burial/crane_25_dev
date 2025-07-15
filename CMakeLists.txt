@@ -57,7 +57,10 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     applications/led_task.cpp
 
     crane_middleware/led/led.cpp
+
     crane_middleware/motor/zdt_motor/zdt_motor.cpp
+
+    crane_middleware/ops_9/ops_9.cpp
     crane_middleware/tools/math_tools/math_tools.cpp
     crane_middleware/tools/mecanum/mecanum.cpp
     crane_middleware/tools/pid/pid.cpp

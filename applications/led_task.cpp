@@ -9,10 +9,10 @@ extern "C" void led_task()
   while (true) {
     red.set(true);
     green.set(false);
-    osDelay(500);
+    osDelay(200);
     red.set(false);
-    green.set(true);
-    osDelay(500);
+    // green.set(true);
+    osDelay(200);
   }
 
   return;

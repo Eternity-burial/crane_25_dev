@@ -2,26 +2,30 @@
     "task.autoDetect": "off",
     "editor.formatOnSave": true,
     "[c]": {
-        "editor.formatOnSave": false,
+        "editor.formatOnSave": false
     },
     "files.associations": {
         "*.h": "c",
-        "array": "cpp"
+        "array": "cpp",
+        "limits": "cpp"
     },
-    "cortex-debug.variableUseNaturalFormat": true,
+    "cortex-debug.variableUseNaturalFormat": false,
     "cmake.configureOnOpen": true,
+    // ✅ 添加这一行以启用 Debug 模式编译
+    "cmake.buildType": "Debug",
     "cmake.options.advanced": {
         "configurePreset": {
-            "statusBarVisibility": "visible",
+            "statusBarVisibility": "visible"
         },
         "build": {
-            "statusBarVisibility": "hidden",
+            "statusBarVisibility": "hidden"
         },
         "launch": {
-            "statusBarVisibility": "hidden",
+            "statusBarVisibility": "hidden"
         },
         "debug": {
-            "statusBarVisibility": "hidden",
-        },
+            "statusBarVisibility": "hidden"
+        }
     },
+    "C_Cpp.errorSquiggles": "enabled"
 }
