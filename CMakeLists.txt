@@ -50,9 +50,11 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
 
     applications/controllers/mecanum_controller/mecanum_controller.cpp
+    applications/controllers/MPC_controller/MPC_controller.cpp
 
     applications/hardwares/uart/uart_recv.cpp
 
+    applications/chassis_task.cpp
     applications/control_task.cpp
     applications/led_task.cpp
 

@@ -10,10 +10,10 @@ Ops_9::Ops_9(UART_HandleTypeDef * huart, bool use_dma) : huart(huart), use_dma_(
 void Ops_9::request()
 {
   if (use_dma_) {
-    HAL_UART_Receive_DMA(huart, rx_buf_, sizeof(rx_buf_));
+    HAL_UARTEx_ReceiveToIdle_DMA(huart, rx_buf_, sizeof(rx_buf_));
   }
   else {
-    HAL_UART_Receive_IT(huart, rx_buf_, sizeof(rx_buf_));
+    HAL_UARTEx_ReceiveToIdle_IT(huart, rx_buf_, sizeof(rx_buf_));
   }
 }
 void Ops_9::update(const uint8_t * frame, uint16_t len)

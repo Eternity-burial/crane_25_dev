@@ -14,7 +14,6 @@ ZDT_Motor::ZDT_Motor(UART_HandleTypeDef * huart, uint8_t addr, bool use_dma)
 
 void ZDT_Motor::request()
 {
-  if (buff_[0] != addr_) return;
   if (use_dma_) {
     HAL_UARTEx_ReceiveToIdle_DMA(huart, buff_, BUFF_SIZE);
     __HAL_DMA_DISABLE_IT(huart->hdmarx, DMA_IT_HT);
@@ -39,14 +38,14 @@ void ZDT_Motor::update(uint16_t size)
       break;
 
     case 0x36:  // 实时位置
-      if (size == 7) {
+      if (size == 8) {
         int32_t raw_pos = (buff_[2] << 24) | (buff_[3] << 16) | (buff_[4] << 8) | buff_[5];
         angle = static_cast<float>(raw_pos) * 360.0f / 65536.0f;  // 可根据编码器细分换算角度
       }
       break;
 
     case 0x37:  // 位置误差
-      if (size == 6) {
+      if (size == 8) {
         pos_error = static_cast<int16_t>((buff_[3] << 8) | buff_[4]);
       }
       break;

@@ -44,6 +44,8 @@ public:
   int16_t pos_error = 0;    // 位置误差（0x37）
   uint8_t status_flag = 0;  // 电机状态字节（0x3A）
 
+  uint8_t buff_[BUFF_SIZE];  // 接收缓冲区  //只读！
+
   void request();
   void update(uint16_t size);
 
@@ -85,7 +87,6 @@ private:
   const bool use_dma_;
   const uint8_t addr_;
 
-  uint8_t buff_[BUFF_SIZE];         // 接收缓冲区
   uint8_t tx_buffer_[TX_BUF_SIZE];  // 发送缓冲区
 };
 
