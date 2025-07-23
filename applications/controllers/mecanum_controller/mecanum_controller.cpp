@@ -48,27 +48,38 @@ void MecanumController::control()
   //   return;
   // }
   motor_lf_.readCurrentSpeed();
-  osDelay(1);
+  osDelay(3);
   motor_lf_speed_pid_.calc(wheels_.speed_lf, motor_lf_.speed);
 
   motor_lr_.readCurrentSpeed();
-  osDelay(1);
+  osDelay(3);
   motor_lr_speed_pid_.calc(wheels_.speed_lr, motor_lr_.speed);
 
   motor_rf_.readCurrentSpeed();
-  osDelay(1);
+  osDelay(3);
   motor_rf_speed_pid_.calc(wheels_.speed_rf, motor_rf_.speed);
 
   motor_rr_.readCurrentSpeed();
-  osDelay(1);
+  osDelay(3);
   motor_rr_speed_pid_.calc(wheels_.speed_rr, motor_rr_.speed);
 
-  // motor_lf_.setVelocity(0, motor_lf_speed_pid_.out, 0, 0);
-  // motor_lr_.setVelocity(0, motor_lr_speed_pid_.out, 0, 0);
-  // motor_lr_.setVelocity(0, 100, 0, 0);
+  motor_lf_.readCurrentPosition();
+  osDelay(3);
+  motor_lr_.readCurrentPosition();
+  osDelay(3);
+  motor_rf_.readCurrentPosition();
+  osDelay(3);
+  motor_rr_.readCurrentPosition();
+  osDelay(3);
+
+  // motor_lf_.setPositionWithRadUnits(10, 1, 0, 0);
+  osDelay(1);
+  motor_lr_.setPositionWithRadUnits(10, 1, 0, 0);
+  osDelay(1);
+  // motor_rf_.setPositionWithRadUnits(10, 1, 0, 0);
+  osDelay(1);
+  motor_rr_.setPositionWithRadUnits(10, 1, 0, 0);
+  osDelay(1);
+
   // osDelay(5000);
-  // motor_lr_.setVelocity(0, 0, 0, 0);
-  // osDelay(5000);
-  // motor_rf_.setVelocity(0, motor_rf_speed_pid_.out, 0, 0);
-  // motor_rr_.setVelocity(0, motor_rr_speed_pid_.out, 0, 0);
 }

@@ -1,9 +1,12 @@
 #include "zdt_motor.hpp"
 
+#include <cmath>
 #include <cstring>
 
 #include "usart.h"
-
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 namespace crane
 {
 
@@ -40,7 +43,7 @@ void ZDT_Motor::update(uint16_t size)
     case 0x36:  // 实时位置
       if (size == 8) {
         int32_t raw_pos = (buff_[2] << 24) | (buff_[3] << 16) | (buff_[4] << 8) | buff_[5];
-        angle = static_cast<float>(raw_pos) * 360.0f / 65536.0f;  // 可根据编码器细分换算角度
+        angle = static_cast<float>(raw_pos) * (2.0f * M_PI) / 65536.0f;  // 可根据编码器细分换算角度
       }
       break;
 
@@ -206,7 +209,26 @@ void ZDT_Motor::setPosition(
     0x6B};
   TX(cmd);
 }
+void ZDT_Motor::setPositionWithRadUnits(
+  double angle_rad, double velocity_rad_s, uint8_t acc, bool absolute, bool sync)
+{
+  // --- 1. 位置转换 (弧度 -> 脉冲) ---
+  const double pulses_per_radian = PULSES_PER_REVOLUTION / (2.0 * M_PI);
+  uint8_t dir = (angle_rad >= 0) ? DIR_CCW : DIR_CW;
+  uint32_t pulses = static_cast<uint32_t>(std::round(std::abs(angle_rad) * pulses_per_radian));
 
+  // --- 2. 速度转换 (弧度/秒 -> RPM) ---
+  // 速度值应为正，方向由上面的 dir 决定
+  double rpm = std::abs(velocity_rad_s) * VELOCITY_RADS_TO_RPM;
+
+  // --- 3. 范围检查和类型转换 ---
+  // 将计算出的RPM值限制在uint16_t的最大值(65535)以内
+  rpm = std::min(rpm, 65535.0);
+  uint16_t vel = static_cast<uint16_t>(std::round(rpm));
+
+  // --- 4. 调用底层函数发送命令 ---
+  setPosition(dir, vel, acc, pulses, absolute, sync);
+}
 void ZDT_Motor::stopNow(bool sync)
 {
   uint8_t cmd[] = {addr_, 0xFE, 0x98, static_cast<uint8_t>(sync), 0x6B};

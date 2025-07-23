@@ -7,7 +7,9 @@
 
 namespace crane
 {
-
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 constexpr size_t BUFF_SIZE = 255;
 constexpr size_t TX_BUF_SIZE = 32;  // 最大发送命令长度，按需可调
 
@@ -54,6 +56,8 @@ public:
   void setPosition(
     uint8_t dir, uint16_t vel, uint8_t acc, uint32_t pulses, bool absolute = false,
     bool sync = false);
+  void setPositionWithRadUnits(
+    double angle_rad, double velocity_rad_s, uint8_t acc, bool absolute = false, bool sync = false);
   void stopNow(bool sync = false);
   void triggerSyncMotion();
   void setOrigin(bool save = false);
@@ -86,8 +90,12 @@ private:
 
   const bool use_dma_;
   const uint8_t addr_;
-
-  uint8_t tx_buffer_[TX_BUF_SIZE];  // 发送缓冲区
+  static constexpr double PULSES_PER_REVOLUTION = 3200.0;
+  static constexpr double VELOCITY_RADS_TO_RPM = 30.0 / M_PI;  // 转换因子: (60 / 2π)
+  // 定义方向常量，增加代码可读性
+  static const uint8_t DIR_CW = 0x00;   // 顺时针
+  static const uint8_t DIR_CCW = 0x01;  // 逆时针
+  uint8_t tx_buffer_[TX_BUF_SIZE];      // 发送缓冲区
 };
 
 }  // namespace crane
