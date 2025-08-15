@@ -12,7 +12,7 @@
 
 👉 **[环境配置参考：TongjiSuperPower/stm32_dev_env](https://github.com/TongjiSuperPower/stm32_dev_env)**
 
-该环境基于 `VS Code + ARM GCC + Make`，能够实现跨平台的开发。在开始之前，请务必先按照上述链接的指引搭好环境。
+该环境基于 `VS Code + STM32CubeMX`，能够实现跨平台的开发。在开始之前，请务必先按照上述链接的指引搭好环境。
 
 ---
 
@@ -20,30 +20,20 @@
 
 1.  **克隆仓库**
     ```bash
-    git clone https://github.com/Eternity-burial/crane_25_dev.git
+    git clone -b dev2 https://github.com/Eternity-burial/crane_25_dev.git
+    git submodule add https://github.com/TongjiSuperPower/sp_middleware.git
     cd crane_25_dev
     ```
 
 2.  **编译**
-    在 VS Code 终端或命令行中运行：
-    ```bash
-    make
-    ```
-    编译成功后，会在 `build` 目录下生成 `.bin` 和 `.elf` 文件。
+    在 VS Code 中按下 F7 ：
+    
+    编译成功后，会在 `build` 目录下生成  `.elf` 文件。
 
 3.  **烧录**
-    连接好 ST-Link 后，运行：
-    ```bash
-    make flash
-    ```
-
-4.  **清理**
-    清除编译生成的文件：
-    ```bash
-    make clean
-    ```
-
+    连接好 cmsis-Link 后，在 VS Code 中按下 F8
+    
 ## 硬件平台
 
-*   **主控**: [STM32F407ZGT6]
-*   **电机**: [张大头步进电机]
+*   **主控**: [STM32F407IGH6]
+*   **电机**: [M3508 P19直流无刷减速电机]
