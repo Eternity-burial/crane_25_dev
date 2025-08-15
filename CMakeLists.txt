@@ -45,9 +45,13 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
-        
+    
+    # applications/hardwares/motor.cpp
+
+    applications/buzzer_task.cpp
     applications/can_task.cpp
     applications/led_task.cpp
+    applications/motor_task.cpp
     applications/plot_task.cpp    
 
     sp_middleware/io/adc/adc.cpp

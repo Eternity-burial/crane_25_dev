@@ -48,6 +48,10 @@
 
 /* USER CODE END Variables */
 osThreadId defaultTaskHandle;
+osThreadId canHandle;
+osThreadId motorHandle;
+osThreadId ledHandle;
+osThreadId buzzerHandle;
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
@@ -55,6 +59,10 @@ osThreadId defaultTaskHandle;
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void const * argument);
+extern void can_task(void const * argument);
+extern void motor_task(void const * argument);
+extern void led_task(void const * argument);
+extern void buzzer_task(void const * argument);
 
 extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -105,6 +113,22 @@ void MX_FREERTOS_Init(void) {
   /* definition and creation of defaultTask */
   osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+
+  /* definition and creation of can */
+  osThreadDef(can, can_task, osPriorityAboveNormal, 0, 1024);
+  canHandle = osThreadCreate(osThread(can), NULL);
+
+  /* definition and creation of motor */
+  osThreadDef(motor, motor_task, osPriorityAboveNormal, 0, 512);
+  motorHandle = osThreadCreate(osThread(motor), NULL);
+
+  /* definition and creation of led */
+  osThreadDef(led, led_task, osPriorityNormal, 0, 128);
+  ledHandle = osThreadCreate(osThread(led), NULL);
+
+  /* definition and creation of buzzer */
+  osThreadDef(buzzer, buzzer_task, osPriorityIdle, 0, 128);
+  buzzerHandle = osThreadCreate(osThread(buzzer), NULL);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
