@@ -21,8 +21,8 @@
 1.  **克隆仓库**
     ```bash
     git clone -b dev2 https://github.com/Eternity-burial/crane_25_dev.git
-    git submodule add https://github.com/TongjiSuperPower/sp_middleware.git
     cd crane_25_dev
+    git submodule update --init --recursive
     ```
 
 2.  **编译**
