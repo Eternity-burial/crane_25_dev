@@ -53,6 +53,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     applications/led_task.cpp
     applications/motor_task.cpp
     applications/plot_task.cpp    
+    applications/velocity_smoother.cpp
 
     sp_middleware/io/adc/adc.cpp
     sp_middleware/io/bmi088/bmi088.cpp

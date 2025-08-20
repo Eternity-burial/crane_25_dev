@@ -7,28 +7,29 @@ static const uint16_t CHASSIS_TASK_INIT_TIME = 357;
 
 constexpr int CONTROL_T_MS = 1;           // ms
 constexpr float T = CONTROL_T_MS * 1e-3;  // s
-constexpr float GEAR_RADIUS = 0.068f;     // m
+
+// --- Y轴 ---
+constexpr float Y_RADIUS = 0.068f;              // m
+constexpr float MAX_Y_SPEED = 0.5f / Y_RADIUS;  // rad/s
+constexpr float Y_ACCEL = 2.0f / Y_RADIUS;      // rad/s^2 (假设线性加速度为2.0 m/s^2)
+
+// --- X轴 ---
+constexpr float X_RADIUS = 0.01f;               // m
+constexpr float MAX_X_SPEED = 0.5f / X_RADIUS;  // rad/s
+constexpr float X_ACCEL = 2.0f / X_RADIUS;      // rad/s^2
+
+// --- Z轴前 ---
+constexpr float ZF_RADIUS = 0.01495f;               // m
+constexpr float MAX_ZF_SPEED = 0.5f / ZF_RADIUS;  // rad/s
+constexpr float ZF_ACCEL = 2.0f / ZF_RADIUS;      // rad/s^2
+
+// --- Z轴后 ---
+constexpr float ZR_RADIUS = 0.0082f;               // m
+constexpr float MAX_ZR_SPEED = 0.07f / ZR_RADIUS;  // rad/s
+constexpr float ZR_ACCEL = 2.0f / ZR_RADIUS;      // rad/s^2
 
 typedef struct
 {
-  //速度滤波，暂未用到
-  float vx_last = 0.0f;
-  float vy_last = 0.0f;
-  float vw_last = 0.0f;
-
-  float vx_set = 0.0f;
-  float vy_set = 0.0f;
-  float vw_set = 0.0f;
-
-  float set_buffer = 600.f;
-  float limit_power = 30.f;
-
-  bool under_attack = true;
-
-  bool varying = true;
-  uint16_t hp_last = 0;
-
-  uint16_t hp_cnt = 400;
   // 期望电机角度
   float set_motor_angle[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
   // 期望电机速度
@@ -37,5 +38,13 @@ typedef struct
   float set_motor_torque[5] = {0.0f, 0.0f, 0.0f, 0.0f, 0.0f};
 
 } move_t;
+
+typedef struct
+{
+  float y = 0.0f;
+  float x = 0.0f;
+  float zf = 0.0f;
+  float zr = 0.0f;
+} coordinate_t;
 
 #endif  // _CHASSIS_PARA_HPP

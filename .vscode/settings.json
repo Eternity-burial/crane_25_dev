@@ -7,7 +7,7 @@
     "files.associations": {
         "*.h": "c"
     },
-    "cortex-debug.variableUseNaturalFormat": true,
+    "cortex-debug.variableUseNaturalFormat": false,
     "cmake.configureOnOpen": true,
     "cmake.options.advanced": {
         "configurePreset": {
